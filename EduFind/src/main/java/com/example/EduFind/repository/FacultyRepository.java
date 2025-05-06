@@ -1,5 +1,6 @@
 package com.example.EduFind.repository;
 
+import com.example.EduFind.model.Course;
 import com.example.EduFind.model.Faculty;
 import com.example.EduFind.model.Institute;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +12,7 @@ public interface FacultyRepository extends JpaRepository<Faculty, Integer> {
     List<Faculty> findFacultiesByInstitute(Institute institute);
     List<Faculty> findFacultiesByCourseID(Integer courseID);
 
-    List<Faculty> findFacultiesByInstituteAndCourse(Institute institute, Integer courseID);
+    List<Faculty> findByInstituteAndCourse(Institute institute, Course course);
 
 
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CourseRepository extends JpaRepository<Course, Integer> {
 
-    List<Course> findCourseByCourseName();
+    List<Course> findCourseByCourseName(String courseName);
     List<Course> findCoursesByPriceLessThan(Integer price);
     // Search courses within a price range
     List<Course> findByPriceBetween(Integer minPrice, Integer maxPrice);

@@ -22,9 +22,12 @@ public class Institute {
     private List<InstituteImages> images;
     private Timestamp tokenExpiry;
 
+    private Boolean isTrialActive;
+
+
     public Institute(){}
 
-    public Institute(String instituteID, String instituteName, String instituteEmail, String institutePassword, Date startDate, String address, String jwtRefreshToken, List<InstituteImages> images, Timestamp tokenExpiry) {
+    public Institute(String instituteID, String instituteName, String instituteEmail, String institutePassword, Date startDate, String address, String jwtRefreshToken, List<InstituteImages> images, Timestamp tokenExpiry, Boolean isTrialActive) {
         this.instituteID = instituteID;
         this.instituteName = instituteName;
         this.instituteEmail = instituteEmail;
@@ -34,6 +37,7 @@ public class Institute {
         this.jwtRefreshToken = jwtRefreshToken;
         this.images = images;
         this.tokenExpiry = tokenExpiry;
+        this.isTrialActive = isTrialActive;
     }
 
     public String getInstituteID() {
@@ -106,5 +110,13 @@ public class Institute {
 
     public void setTokenExpiry(Timestamp tokenExpiry) {
         this.tokenExpiry = tokenExpiry;
+    }
+
+    public Boolean getTrialActive() {
+        return isTrialActive;
+    }
+
+    public void setTrialActive(Boolean trialActive) {
+        isTrialActive = trialActive;
     }
 }

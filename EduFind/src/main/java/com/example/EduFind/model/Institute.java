@@ -1,15 +1,13 @@
 package com.example.EduFind.model;
 
-import com.fasterxml.jackson.databind.DatabindException;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import org.springframework.scheduling.support.SimpleTriggerContext;
+import jakarta.persistence.*;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
+@Table(name = "institute")
 public class Institute {
 
     @Id
@@ -17,15 +15,16 @@ public class Institute {
     private String instituteName;
     private String instituteEmail; // Added this field
     private String institutePassword;
-    private DatabindException startDate;
+    private Date startDate;
     private String address;
     private String jwtRefreshToken;
     @OneToMany(mappedBy = "institute", cascade = CascadeType.ALL)
     private List<InstituteImages> images;
+    private Timestamp tokenExpiry;
 
     public Institute(){}
 
-    public Institute(String instituteID, String instituteName, String instituteEmail, String institutePassword, DatabindException startDate, String address, String jwtRefreshToken, List<InstituteImages> images) {
+    public Institute(String instituteID, String instituteName, String instituteEmail, String institutePassword, Date startDate, String address, String jwtRefreshToken, List<InstituteImages> images, Timestamp tokenExpiry) {
         this.instituteID = instituteID;
         this.instituteName = instituteName;
         this.instituteEmail = instituteEmail;
@@ -34,6 +33,7 @@ public class Institute {
         this.address = address;
         this.jwtRefreshToken = jwtRefreshToken;
         this.images = images;
+        this.tokenExpiry = tokenExpiry;
     }
 
     public String getInstituteID() {
@@ -68,11 +68,11 @@ public class Institute {
         this.institutePassword = institutePassword;
     }
 
-    public DatabindException getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(DatabindException startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
@@ -98,5 +98,13 @@ public class Institute {
 
     public void setImages(List<InstituteImages> images) {
         this.images = images;
+    }
+
+    public Timestamp getTokenExpiry() {
+        return tokenExpiry;
+    }
+
+    public void setTokenExpiry(Timestamp tokenExpiry) {
+        this.tokenExpiry = tokenExpiry;
     }
 }

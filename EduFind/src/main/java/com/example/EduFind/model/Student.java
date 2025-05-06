@@ -2,9 +2,13 @@ package com.example.EduFind.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import org.springframework.scheduling.support.SimpleTriggerContext;
 
+import java.sql.Timestamp;
+
 @Entity
+@Table(name = "student")
 public class Student {
 
     @Id
@@ -14,22 +18,22 @@ public class Student {
     private String qualification;
     private String studentPassword;
     private String number;
-    //private String address;
     private String jwtRefreshToken;
+    private Timestamp tokenExpiry;
 
     public Student(){
 
     }
 
-    public Student(String userID, String emailID, String studentName, String qualification, String studentPassword, String number, String address, String jwtRefreshToken) {
+    public Student(String userID, String emailID, String studentName, String qualification, String studentPassword, String number, String jwtRefreshToken, Timestamp tokenExpiry) {
         this.userID = userID;
         this.emailID = emailID;
         this.studentName = studentName;
         this.qualification = qualification;
         this.studentPassword = studentPassword;
         this.number = number;
-        //this.address = address;
         this.jwtRefreshToken = jwtRefreshToken;
+        this.tokenExpiry = tokenExpiry;
     }
 
     public String getUserID() {
@@ -80,19 +84,19 @@ public class Student {
         this.number = number;
     }
 
-//    public String getAddress() {
-//        return address;
-//    }
-//
-//    public void setAddress(String address) {
-//        this.address = address;
-//    }
-
     public String getJwtRefreshToken() {
         return jwtRefreshToken;
     }
 
     public void setJwtRefreshToken(String jwtRefreshToken) {
         this.jwtRefreshToken = jwtRefreshToken;
+    }
+
+    public Timestamp getTokenExpiry() {
+        return tokenExpiry;
+    }
+
+    public void setTokenExpiry(Timestamp tokenExpiry) {
+        this.tokenExpiry = tokenExpiry;
     }
 }

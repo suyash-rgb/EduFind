@@ -211,14 +211,152 @@ ALTER TABLE admin ADD COLUMN tokenExpiry TIMESTAMP DEFAULT NULL;
 ALTER TABLE student ADD COLUMN tokenExpiry TIMESTAMP DEFAULT NULL;
 ALTER TABLE institute ADD COLUMN tokenExpiry TIMESTAMP DEFAULT NULL;
 
+ALTER TABLE student_course DROP FOREIGN KEY student_course_ibfk_1;
+
+ALTER TABLE student_course MODIFY COLUMN userID VARCHAR(255);
+
+ALTER TABLE student_course 
+ADD CONSTRAINT student_course_ibfk_1 FOREIGN KEY (userID) REFERENCES student(userID);
+
+SHOW CREATE TABLE course_institute;
+
+ALTER TABLE course_institute ADD COLUMN id INT NOT NULL AUTO_INCREMENT PRIMARY KEY;
+
+ALTER TABLE course_institute DROP FOREIGN KEY course_institute_ibfk_2;
+
+ALTER TABLE course_institute MODIFY COLUMN instituteID VARCHAR(255);
+
+ALTER TABLE course_institute 
+ADD CONSTRAINT course_institute_ibfk_2 FOREIGN KEY (instituteID) REFERENCES institute(instituteID);
+
+ALTER TABLE faculty DROP FOREIGN KEY faculty_ibfk_2;
+
+ALTER TABLE faculty MODIFY COLUMN instituteID VARCHAR(255);
+
+ALTER TABLE faculty 
+ADD CONSTRAINT faculty_ibfk_2 FOREIGN KEY (instituteID) REFERENCES institute(instituteID);
+
+ALTER TABLE feedback DROP FOREIGN KEY feedback_ibfk_1;
+
+ALTER TABLE feedback MODIFY COLUMN instituteID VARCHAR(255);
+
+ALTER TABLE feedback 
+ADD CONSTRAINT feedback_ibfk_1 FOREIGN KEY (instituteID) REFERENCES institute(instituteID);
+
+ALTER TABLE admissionrequest 
+ADD CONSTRAINT admissionrequest_ibfk_3 FOREIGN KEY (instituteID) REFERENCES institute(instituteID);
+
+ALTER TABLE admissionrequest MODIFY COLUMN instituteID VARCHAR(255) NOT NULL;
 
 
+SHOW CREATE TABLE admissionrequest;
 
 
+ALTER TABLE admissionrequest DROP FOREIGN KEY admissionrequest_ibfk_1;
+ALTER TABLE user_roles DROP FOREIGN KEY user_roles_ibfk_1;
+ALTER TABLE student MODIFY COLUMN userID VARCHAR(255) NOT NULL;
+ALTER TABLE admissionrequest 
+ADD CONSTRAINT admissionrequest_ibfk_1 FOREIGN KEY (userID) REFERENCES student(userID);
+ALTER TABLE user_roles 
+ADD CONSTRAINT user_roles_ibfk_1 FOREIGN KEY (userID) REFERENCES student(userID);
 
-
-
-
-
+DROP TABLE audit_log;
 
 SHOW TABLES;
+
+DROP DATABASE edufind;
+
+CREATE DATABASE edufind;
+
+USE edufind;
+
+CREATE TABLE course (
+    courseID INT PRIMARY KEY AUTO_INCREMENT,
+    courseName VARCHAR(255) NOT NULL,
+    price INT NOT NULL,
+    seats INT NOT NULL,
+    filledSeats INT DEFAULT 0,
+    brochureData LONGBLOB
+);
+
+CREATE TABLE institute (
+    instituteID VARCHAR(255) PRIMARY KEY,
+    instituteName VARCHAR(255) NOT NULL,
+    instituteEmail VARCHAR(255) UNIQUE NOT NULL,
+    institutePassword VARCHAR(255) NOT NULL,
+    startDate DATE NOT NULL,
+    address TEXT,
+    jwtRefreshToken VARCHAR(255),
+    tokenExpiry DATE,
+    isTrialActive BOOLEAN DEFAULT TRUE,
+    imageData LONGBLOB  -- Merging InstituteImages into Institute
+);
+
+CREATE TABLE faculty (
+    facultyID INT PRIMARY KEY AUTO_INCREMENT,
+    facultyName VARCHAR(255) NOT NULL,
+    instituteID VARCHAR(255) NOT NULL,
+    courseID INT NOT NULL,
+    FOREIGN KEY (instituteID) REFERENCES institute(instituteID) ON DELETE CASCADE,
+    FOREIGN KEY (courseID) REFERENCES course(courseID) ON DELETE CASCADE
+);
+
+CREATE TABLE student (
+    userID VARCHAR(255) PRIMARY KEY,
+    emailID VARCHAR(255) UNIQUE NOT NULL,
+    studentName VARCHAR(255) NOT NULL,
+    qualification VARCHAR(100),
+    studentPassword VARCHAR(255) NOT NULL,
+    number VARCHAR(20),
+    jwtRefreshToken VARCHAR(255),
+    tokenExpiry TIMESTAMP,
+    admissionRequestCourseID INT DEFAULT NULL,  -- Direct association with Course
+    admissionRequestInstituteID VARCHAR(255) DEFAULT NULL,
+    admissionRequestDate DATE DEFAULT NULL,
+    admissionRequestStatus BOOLEAN DEFAULT FALSE,
+    admissionRequestRejected BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (admissionRequestCourseID) REFERENCES course(courseID) ON DELETE SET NULL,
+    FOREIGN KEY (admissionRequestInstituteID) REFERENCES institute(instituteID) ON DELETE SET NULL
+);
+
+CREATE TABLE feedback (
+    feedbackID INT PRIMARY KEY AUTO_INCREMENT,
+    instituteID VARCHAR(255) NOT NULL,
+    userID VARCHAR(255) NOT NULL,
+    rating INT CHECK (rating BETWEEN 1 AND 5),
+    comments TEXT,
+    FOREIGN KEY (instituteID) REFERENCES institute(instituteID) ON DELETE CASCADE,
+    FOREIGN KEY (userID) REFERENCES student(userID) ON DELETE CASCADE
+);
+
+CREATE TABLE user_roles (
+    userID VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL,
+    PRIMARY KEY (userID, role),
+    FOREIGN KEY (userID) REFERENCES student(userID) ON DELETE CASCADE
+);
+
+CREATE TABLE admin (
+    adminID VARCHAR(255) PRIMARY KEY,
+    adminEmail VARCHAR(255) UNIQUE NOT NULL,
+    adminPassword VARCHAR(255) NOT NULL,
+    role VARCHAR(50) DEFAULT 'SUPER_ADMIN'
+);
+
+ALTER TABLE institute ADD COLUMN approvedByAdminID VARCHAR(255);
+ALTER TABLE institute ADD CONSTRAINT fk_admin FOREIGN KEY (approvedByAdminID) REFERENCES admin(adminID);
+
+ALTER TABLE course ADD COLUMN instituteID VARCHAR(255) NOT NULL;
+ALTER TABLE course ADD CONSTRAINT fk_institute FOREIGN KEY (instituteID) REFERENCES institute(instituteID);
+
+ALTER TABLE user_roles 
+ADD COLUMN instituteID VARCHAR(255),
+ADD COLUMN adminID VARCHAR(255);
+
+ALTER TABLE user_roles 
+ADD CONSTRAINT fk_user_roles_student FOREIGN KEY (userID) REFERENCES student(userID) ON DELETE CASCADE,
+ADD CONSTRAINT fk_user_roles_institute FOREIGN KEY (instituteID) REFERENCES institute(instituteID) ON DELETE CASCADE,
+ADD CONSTRAINT fk_user_roles_admin FOREIGN KEY (adminID) REFERENCES admin(adminID) ON DELETE CASCADE;
+
+
+DESCRIBE TABLE user_roles;

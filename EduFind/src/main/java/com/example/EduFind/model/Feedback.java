@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "feedback")
 public class Feedback {
 
     @Id
@@ -13,7 +14,7 @@ public class Feedback {
 
     @ManyToOne
     @JoinColumn(name = "userID")
-    private Student Student;
+    private Student student;
 
     @ManyToOne
     @JoinColumn(name = "instituteID")
@@ -26,9 +27,9 @@ public class Feedback {
 
     }
 
-    public Feedback(Integer feedbackID, com.example.EduFind.model.Student student, Institute institute, String description, Date feedbackDate) {
+    public Feedback(Integer feedbackID, Student student, Institute institute, String description, Date feedbackDate) {
         this.feedbackID = feedbackID;
-        Student = student;
+        this.student = student;
         this.institute = institute;
         this.description = description;
         this.feedbackDate = feedbackDate;
@@ -42,12 +43,12 @@ public class Feedback {
         this.feedbackID = feedbackID;
     }
 
-    public com.example.EduFind.model.Student getStudent() {
-        return Student;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudent(com.example.EduFind.model.Student student) {
-        Student = student;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public Institute getInstitute() {

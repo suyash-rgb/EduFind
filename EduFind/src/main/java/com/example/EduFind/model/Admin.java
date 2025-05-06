@@ -21,4 +21,54 @@ public class Admin {
     @OneToMany(mappedBy = "approvedByAdmin", cascade = CascadeType.ALL)
     private List<Institute> approvedInstitutes;
 
+    public Admin() {
+    }
+
+    public Admin(String adminID, String adminEmail, String adminPassword, String role, List<Institute> approvedInstitutes) {
+        this.adminID = adminID;
+        this.adminEmail = adminEmail;
+        this.adminPassword = adminPassword;
+        this.role = role;
+        this.approvedInstitutes = approvedInstitutes;
+    }
+
+    public String getAdminID() {
+        return adminID;
+    }
+
+    public void setAdminID(String adminID) {
+        this.adminID = adminID;
+    }
+
+    public String getAdminEmail() {
+        return adminEmail;
+    }
+
+    public void setAdminEmail(String adminEmail) {
+        this.adminEmail = adminEmail;
+    }
+
+    public String getAdminPassword() {
+        return adminPassword;
+    }
+
+    public void setAdminPassword(String adminPassword) {
+        this.adminPassword = adminPassword;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public List<Institute> getApprovedInstitutes() {
+        return approvedInstitutes;
+    }
+
+    public void setApprovedInstitutes(List<Institute> approvedInstitutes) {
+        this.approvedInstitutes = approvedInstitutes;
+    }
 }

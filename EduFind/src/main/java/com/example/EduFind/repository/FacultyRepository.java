@@ -11,6 +11,8 @@ public interface FacultyRepository extends JpaRepository<Faculty, Integer> {
     List<Faculty> findFacultiesByInstitute(Institute institute);
     List<Faculty> findFacultiesByCourseID(Integer courseID);
 
+    List<Faculty> findFacultiesByInstituteAndCourse(Institute institute, Integer courseID);
+
 
 
 }

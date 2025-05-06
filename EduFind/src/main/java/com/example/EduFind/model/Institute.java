@@ -18,7 +18,7 @@ public class Institute {
     private Date startDate;
     private String address;
     private String jwtRefreshToken;
-    @OneToMany(mappedBy = "institute", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "institute", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<InstituteImages> images;
     private Timestamp tokenExpiry;
 

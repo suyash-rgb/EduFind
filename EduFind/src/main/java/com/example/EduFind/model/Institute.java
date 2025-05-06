@@ -2,8 +2,7 @@ package com.example.EduFind.model;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -15,19 +14,19 @@ public class Institute {
     private String instituteName;
     private String instituteEmail; // Added this field
     private String institutePassword;
-    private Date startDate;
+    private LocalDate startDate;
     private String address;
     private String jwtRefreshToken;
     @OneToMany(mappedBy = "institute", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<InstituteImages> images;
-    private Timestamp tokenExpiry;
+    private LocalDate tokenExpiry;
 
     private Boolean isTrialActive;
 
 
     public Institute(){}
 
-    public Institute(String instituteID, String instituteName, String instituteEmail, String institutePassword, Date startDate, String address, String jwtRefreshToken, List<InstituteImages> images, Timestamp tokenExpiry, Boolean isTrialActive) {
+    public Institute(String instituteID, String instituteName, String instituteEmail, String institutePassword, LocalDate startDate, String address, String jwtRefreshToken, List<InstituteImages> images, LocalDate tokenExpiry, Boolean isTrialActive) {
         this.instituteID = instituteID;
         this.instituteName = instituteName;
         this.instituteEmail = instituteEmail;
@@ -72,11 +71,11 @@ public class Institute {
         this.institutePassword = institutePassword;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
@@ -104,19 +103,19 @@ public class Institute {
         this.images = images;
     }
 
-    public Timestamp getTokenExpiry() {
+    public LocalDate getTokenExpiry() {
         return tokenExpiry;
     }
 
-    public void setTokenExpiry(Timestamp tokenExpiry) {
+    public void setTokenExpiry(LocalDate tokenExpiry) {
         this.tokenExpiry = tokenExpiry;
     }
 
-    public Boolean getTrialActive() {
+    public Boolean getIsTrialActive() {
         return isTrialActive;
     }
 
-    public void setTrialActive(Boolean trialActive) {
+    public void setIsTrialActive(Boolean trialActive) {
         isTrialActive = trialActive;
     }
 }

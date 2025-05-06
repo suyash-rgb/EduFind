@@ -18,19 +18,26 @@ public class InstituteService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
     public String registerInstitute(InstituteRegistrationDTO instituteRegistrationDTO) {
         Institute institute = new Institute();
         institute.setInstituteName(instituteRegistrationDTO.getInstituteName());
         institute.setInstituteEmail(instituteRegistrationDTO.getInstituteEmail());
         institute.setInstitutePassword(passwordEncoder.encode(instituteRegistrationDTO.getInstitutePassword())); // Hash Password
+        institute.setAddress(instituteRegistrationDTO.getAddress());
 
-        // Enable free trial
-        institute.setStartDate(LocalDate.now());
-        institute.setTokenExpiry(LocalDate.now().plusDays(15)); // Free trial period
-        institute.setIsTrialActive(true);
+        // Determine subscription status
+        if (Boolean.TRUE.equals(instituteRegistrationDTO.getIsTrialActive()) || instituteRegistrationDTO.getIsTrialActive() == null) {
+            institute.setIsTrialActive(true);
+            institute.setTokenExpiry(LocalDate.now().plusDays(15)); // Free trial
+        } else {
+            institute.setIsTrialActive(false);
+            institute.setTokenExpiry(LocalDate.now().plusYears(1)); // Paid subscription
+        }
 
         instituteRepository.save(institute);
-        return "Registration successful! Free trial activated for 15 days.";
+        return "Registration successful! " +
+                (institute.getIsTrialActive() ? "Free trial activated for 15 days." : "Subscription activated for 1 year.");
     }
 
 }

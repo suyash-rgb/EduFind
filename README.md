@@ -1,56 +1,40 @@
 # EduFind
 A SpringBoot + React WebApp created for students to be able to find and explore coaching institutes for various fields.
 
-You're working with a well-structured relational database designed for managing educational institutions, students, courses, and administrative functions. Let's break it down into key components:
+Absolutely! Here’s a **summary of how we’ve restructured your database and entity relationships** to create a **cleaner, scalable, and more efficient** design:  
 
-# Database
+### **🔹 Entity Relationships Overview**
+#### 🏫 **Institute**
+- **One-to-Many** → Courses (`An Institute can have multiple Courses`)  
+- **One-to-Many** → Admission Requests (`An Institute can receive requests from multiple Students`)  
+- **One-to-Many** → Faculty (`An Institute employs multiple Faculty members`)  
+- **Many-to-One** → Admin (`An Institute is approved by an Admin`)  
 
-### **Core Entities**
-1. **Admin (`admin`)**  
-   - Stores admin credentials and authentication tokens.
-   
-2. **Institute (`institute`)**  
-   - Represents educational institutions, containing details like name, password, email, and address.
-   
-3. **Student (`student`)**  
-   - Represents students with basic personal details, credentials, and unique identifiers.
+#### 📖 **Course**
+- **Many-to-One** → Institute (`Each Course belongs to one Institute`)  
+- **One-to-Many** → Admission Requests (`Each Course can be requested by multiple Students`)  
 
-4. **Course (`course`)**  
-   - Holds course details such as name, price, seat availability, and brochures.
+#### 👩‍🎓 **Student**
+- **Many-to-One** → Institute (`Each Student applies to one Institute`)  
+- **Many-to-One** → Course (`Each Student applies to one Course`)  
+- **One-to-Many** → Feedback (`A Student can submit multiple reviews`)  
+- **One-to-Many** → Roles (`A Student can have multiple roles`)  
 
-### **Relationships Between Entities**
-1. **Institute & Course (`course_institute`)**  
-   - Associates institutes with courses they offer.
+#### 👨‍🏫 **Faculty**
+- **Many-to-One** → Institute (`Each Faculty belongs to one Institute`)  
+- **Many-to-One** → Course (`Each Faculty teaches one Course`)  
 
-2. **Student & Course (`student_course`)**  
-   - Tracks students enrolled in courses.
+#### ⭐ **Feedback**
+- **Many-to-One** → Institute (`Each Feedback is about one Institute`)  
+- **Many-to-One** → Student (`Each Feedback is submitted by one Student`)  
 
-3. **Admission Requests (`admissionrequest`)**  
-   - Handles student applications, linking students (`userID`), institutes (`instituteID`), and courses (`courseID`).
-   
-4. **Faculty (`faculty`)**  
-   - Associates faculty members with courses and institutes.
-   
-5. **Audit Log (`audit_log`)**  
-   - Captures student actions for tracking changes.
-   
-6. **Feedback (`feedback`)**  
-   - Stores student feedback related to institutes.
+#### 🛡 **Admin**
+- **One-to-Many** → Institutes (`An Admin approves multiple Institutes`)  
+- **One-to-Many** → Roles (`An Admin can have multiple permissions`)  
 
-7. **Roles & User Roles (`roles`, `user_roles`)**  
-   - Defines roles and assigns them to users (`student` table).
+#### 🔑 **UserRoles**
+- **Many-to-One** → Student (`A Student can have a role like STUDENT`)  
+- **Many-to-One** → Institute (`An Institute can have a role like INSTITUTE_ADMIN`)  
+- **Many-to-One** → Admin (`An Admin can have a role like SUPER_ADMIN`)  
 
-### **Media & Additional Features**
-1. **Institute Images (`instituteimages`)**  
-   - Stores institute-related images in binary form.
-   
-2. **Course Images (`courseimages`)**  
-   - Stores images related to courses.
-
-### **Key Constraints**
-- **Foreign Keys** ensure integrity by linking relevant tables.
-- **Auto-Incremented Primary Keys** simplify indexing for records.
-- **Unique Constraints on Emails** prevent duplicate registrations.
-
-Your structure follows good relational database principles, ensuring scalability and clear linkages between students, courses, and institutes. Do you need help optimizing any aspect of this?
 

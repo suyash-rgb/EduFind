@@ -8,17 +8,28 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "courseID")
     private Integer courseID;
+
+    @Column(name = "courseName")
     private String courseName;
+
+    @Column(name = "price")
     private Integer price;
+
+    @Column(name = "seats")
     private Integer seats;
+
+    @Column(name = "filledSeats")
     private Integer filledSeats;
 
     @Lob
+    @Column(name = "brochureData")
     private byte[] brochureData;
 
     @ManyToOne
     @JoinColumn(name = "instituteID", nullable = false)
+
     private Institute institute;
 
     @OneToMany(mappedBy = "admissionRequestCourse", cascade = CascadeType.ALL)

@@ -9,20 +9,37 @@ import java.util.List;
 public class Institute {
 
     @Id
+    @Column(name = "instituteID")
     private String instituteID;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "instituteName", unique = true, nullable = false)
     private String instituteEmail;
 
+    @Column(name = "instituteEmail")
     private String instituteName;
+
+    @Column(name = "institutePassword")
     private String institutePassword;
+
+    @Column(name = "startDate", nullable = false)
     private LocalDate startDate;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "jwtRefreshToken")
     private String jwtRefreshToken;
+
+    @Column(name = "tokenExpiry")
     private LocalDate tokenExpiry;
+
+    @Column(name = "isTrialActive")
     private Boolean isTrialActive = true;
 
+    private Boolean isSubscribed = false; // Track subscription status
+
     @Lob
+    @Column(name = "imageData")
     private byte[] imageData;
 
     @OneToMany(mappedBy = "institute", cascade = CascadeType.ALL)
@@ -32,13 +49,13 @@ public class Institute {
     private List<Student> admissionRequests;
 
     @ManyToOne
-    @JoinColumn(name = "approvedByAdminID")
+    @JoinColumn(name = "approvedByAdminID", referencedColumnName = "adminID")
     private Admin approvedByAdmin;
 
     public Institute() {
     }
 
-    public Institute(String instituteID, String instituteEmail, String instituteName, String institutePassword, LocalDate startDate, String address, String jwtRefreshToken, LocalDate tokenExpiry, Boolean isTrialActive, byte[] imageData, List<Course> courses, List<Student> admissionRequests, Admin approvedByAdmin) {
+    public Institute(String instituteID, String instituteEmail, String instituteName, String institutePassword, LocalDate startDate, String address, String jwtRefreshToken, LocalDate tokenExpiry, Boolean isTrialActive, Boolean isSubscribed, byte[] imageData, List<Course> courses, List<Student> admissionRequests, Admin approvedByAdmin) {
         this.instituteID = instituteID;
         this.instituteEmail = instituteEmail;
         this.instituteName = instituteName;
@@ -48,6 +65,7 @@ public class Institute {
         this.jwtRefreshToken = jwtRefreshToken;
         this.tokenExpiry = tokenExpiry;
         this.isTrialActive = isTrialActive;
+        this.isSubscribed = isSubscribed;
         this.imageData = imageData;
         this.courses = courses;
         this.admissionRequests = admissionRequests;
@@ -124,6 +142,22 @@ public class Institute {
 
     public void setIsTrialActive(Boolean trialActive) {
         isTrialActive = trialActive;
+    }
+
+    public Boolean getTrialActive() {
+        return isTrialActive;
+    }
+
+    public void setTrialActive(Boolean trialActive) {
+        isTrialActive = trialActive;
+    }
+
+    public Boolean getIsSubscribed() {
+        return isSubscribed;
+    }
+
+    public void setIsSubscribed(Boolean subscribed) {
+        isSubscribed = subscribed;
     }
 
     public byte[] getImageData() {

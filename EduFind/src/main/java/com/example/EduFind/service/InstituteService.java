@@ -1,15 +1,14 @@
 package com.example.EduFind.service;
 
-package com.example.EduFind.service;
 
 import com.example.EduFind.DTOs.InstituteRegistrationDTO;
-import com.example.EduFind.dto.InstituteRegisterRequest;
 import com.example.EduFind.model.Admin;
 import com.example.EduFind.model.Institute;
 import com.example.EduFind.repository.InstituteRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -26,6 +25,8 @@ public class InstituteService {
         institute.setInstitutePassword(request.getInstitutePassword()); // Hash password in real system
         institute.setAddress(request.getAddress());
         institute.setIsTrialActive(true);
+        institute.setTokenExpiry(LocalDate.now().plusDays(30)); // Set 30-day
+        institute.setIsSubscribed(false);
         institute.setApprovedByAdmin(null); // Not approved yet
 
         instituteRepository.save(institute);

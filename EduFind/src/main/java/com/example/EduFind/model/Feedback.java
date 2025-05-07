@@ -10,17 +10,21 @@ public class Feedback {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "feedbackID")
     private Integer feedbackID;
 
     @ManyToOne
-    @JoinColumn(name = "instituteID", nullable = false)
+    @JoinColumn(name = "instituteID", referencedColumnName = "instituteID", nullable = false)
     private Institute institute;
 
     @ManyToOne
-    @JoinColumn(name = "userID", nullable = false)
+    @JoinColumn(name = "userID",referencedColumnName = "userID", nullable = false)
     private Student student;
 
+    @Column(name = "rating")
     private int rating;
+
+    @Column(name = "comments")
     private String comments;
 
     public Feedback() {

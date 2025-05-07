@@ -8,15 +8,18 @@ public class Faculty {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "facultyID")
     private Integer facultyID;
+
+    @Column(name = "facultyName")
     private String facultyName;
 
     @ManyToOne
-    @JoinColumn(name = "instituteID", nullable = false)
+    @JoinColumn(name = "instituteID", referencedColumnName = "instituteID", nullable = false)
     private Institute institute;
 
     @ManyToOne
-    @JoinColumn(name = "courseID", nullable = false)
+    @JoinColumn(name = "courseID", referencedColumnName = "courseID", nullable = false)
     private Course course;
 
     public Faculty() {

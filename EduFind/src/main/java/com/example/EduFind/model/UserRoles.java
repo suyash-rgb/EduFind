@@ -8,25 +8,25 @@ public class UserRoles {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "userID", referencedColumnName = "userID")
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "instituteID")
+    @JoinColumn(name = "instituteID", referencedColumnName = "instituteID")
     private Institute institute;
 
     @ManyToOne
-    @JoinColumn(name = "adminID")
+    @JoinColumn(name = "adminID", referencedColumnName = "adminID")
     private Admin admin;
 
-    @Column(nullable = false)
+    @Column(name = "role", nullable = false)
     private String role;
 
-    public UserRoles() {
-    }
+    public UserRoles() {} // Default Constructor
 
     public UserRoles(Integer id, Student student, Institute institute, Admin admin, String role) {
         this.id = id;

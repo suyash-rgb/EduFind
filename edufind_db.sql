@@ -358,5 +358,57 @@ ADD CONSTRAINT fk_user_roles_student FOREIGN KEY (userID) REFERENCES student(use
 ADD CONSTRAINT fk_user_roles_institute FOREIGN KEY (instituteID) REFERENCES institute(instituteID) ON DELETE CASCADE,
 ADD CONSTRAINT fk_user_roles_admin FOREIGN KEY (adminID) REFERENCES admin(adminID) ON DELETE CASCADE;
 
+CREATE TABLE `user_roles` (
+  `userID` varchar(255) NOT NULL,
+  `role` varchar(255) NOT NULL,
+  `instituteID` varchar(255) DEFAULT NULL,
+  `adminID` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`userID`,`role`),
+  KEY `fk_user_roles_institute` (`instituteID`),
+  KEY `fk_user_roles_admin` (`adminID`),
+  CONSTRAINT `fk_user_roles_admin` FOREIGN KEY (`adminID`) REFERENCES `admin` (`adminID`) ON DELETE CASCADE,
+  CONSTRAINT `fk_user_roles_institute` FOREIGN KEY (`instituteID`) REFERENCES `institute` (`instituteID`) ON DELETE CASCADE,
+  CONSTRAINT `fk_user_roles_student` FOREIGN KEY (`userID`) REFERENCES `student` (`userID`) ON DELETE CASCADE,
+  CONSTRAINT `user_roles_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `student` (`userID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DESCRIBE TABLE user_roles;
+DROP TABLE edufind.user_roles;
+
+CREATE TABLE `user_roles` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, -- Unique identifier for role assignments
+  `userID` VARCHAR(255), -- Nullable, since it applies only to students
+  `instituteID` VARCHAR(255), -- Nullable, since it applies only to institutes
+  `adminID` VARCHAR(255), -- Nullable, since it applies only to admins
+  `role` VARCHAR(255) NOT NULL, -- Defines the role type
+
+  FOREIGN KEY (`userID`) REFERENCES `student`(`userID`) ON DELETE CASCADE,
+  FOREIGN KEY (`instituteID`) REFERENCES `institute`(`instituteID`) ON DELETE CASCADE,
+  FOREIGN KEY (`adminID`) REFERENCES `admin`(`adminID`) ON DELETE CASCADE
+);
+
+INSERT INTO user_roles (userID, role) VALUES ('student_1', 'STUDENT');
+INSERT INTO user_roles (instituteID, role) VALUES ('institute_1', 'INSTITUTE_ADMIN');
+INSERT INTO user_roles (adminID, role) VALUES ('admin_1', 'SUPER_ADMIN');
+
+SELECT * FROM admin;
+
+SELECT * FROM edufind.user_roles;
+
+CREATE TABLE `institute` (
+  `instituteID` varchar(255) NOT NULL,
+  `instituteName` varchar(255) NOT NULL,
+  `instituteEmail` varchar(255) NOT NULL,
+  `institutePassword` varchar(255) NOT NULL,
+  `startDate` date NOT NULL,
+  `address` text,
+  `jwtRefreshToken` varchar(255) DEFAULT NULL,
+  `tokenExpiry` date DEFAULT NULL,
+  `isTrialActive` tinyint(1) DEFAULT '1',
+  `imageData` longblob,
+  `approvedByAdminID` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`instituteID`),
+  UNIQUE KEY `instituteEmail` (`instituteEmail`),
+  KEY `fk_admin` (`approvedByAdminID`),
+  CONSTRAINT `fk_admin` FOREIGN KEY (`approvedByAdminID`) REFERENCES `admin` (`adminID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+

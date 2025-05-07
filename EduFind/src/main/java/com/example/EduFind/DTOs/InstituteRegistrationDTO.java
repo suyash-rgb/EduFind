@@ -9,6 +9,9 @@ public class InstituteRegistrationDTO {
     private String instituteEmail;
     private String institutePassword;
     private String address;
+    private Boolean isTrialActive;
+    private Boolean isSubscribed;
+    private LocalDate startDate;
 
     public String getInstituteID() {
         return instituteID;
@@ -48,5 +51,29 @@ public class InstituteRegistrationDTO {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Boolean getTrialActive() {
+        return isTrialActive;
+    }
+
+    public void setTrialActive(Boolean trialActive) {
+        isTrialActive = trialActive;
+    }
+
+    public Boolean getSubscribed() {
+        return isSubscribed;
+    }
+
+    public void setSubscribed(Boolean subscribed) {
+        isSubscribed = subscribed;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 }

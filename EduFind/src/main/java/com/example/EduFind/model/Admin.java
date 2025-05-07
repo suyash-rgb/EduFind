@@ -24,6 +24,10 @@ public class Admin {
     public Admin() {
     }
 
+    public Admin(String adminID) {
+        this.adminID = adminID;
+    }
+
     public Admin(String adminID, String adminEmail, String adminPassword, String role, List<Institute> approvedInstitutes) {
         this.adminID = adminID;
         this.adminEmail = adminEmail;

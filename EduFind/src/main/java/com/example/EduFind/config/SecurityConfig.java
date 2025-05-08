@@ -3,6 +3,7 @@ package com.example.EduFind.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,13 +30,15 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable()) // ✅ Disables CSRF protection
+        http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/institute/register").permitAll() // ✅ Allow public access
-                        .anyRequest().authenticated()
-                )
-                .build();
+                        .requestMatchers("/api/institute/public/**").permitAll()
+                        .requestMatchers("/api/institute/private/**").authenticated()
+                        .anyRequest().denyAll())
+                        .httpBasic(Customizer.withDefaults());
+
+                return http.build();
     }
 
 }

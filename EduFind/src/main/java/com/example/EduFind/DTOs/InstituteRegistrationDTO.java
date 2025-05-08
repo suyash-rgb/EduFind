@@ -1,5 +1,7 @@
 package com.example.EduFind.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 
 public class InstituteRegistrationDTO {
@@ -11,6 +13,7 @@ public class InstituteRegistrationDTO {
     private String address;
     private Boolean isTrialActive;
     private Boolean isSubscribed;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
     public String getInstituteID() {

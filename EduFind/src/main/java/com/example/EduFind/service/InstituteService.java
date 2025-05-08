@@ -28,6 +28,7 @@ public class InstituteService {
         institute.setTokenExpiry(LocalDate.now().plusDays(30)); // Set 30-day
         institute.setIsSubscribed(false);
         institute.setApprovedByAdmin(null); // Not approved yet
+        institute.setStartDate(request.getStartDate() != null ? request.getStartDate() : LocalDate.now());  // ✅ Fallback value
 
         instituteRepository.save(institute);
         return "Institute registration request submitted for approval.";

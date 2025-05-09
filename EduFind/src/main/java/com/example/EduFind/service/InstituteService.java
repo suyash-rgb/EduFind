@@ -34,17 +34,5 @@ public class InstituteService {
         return "Institute registration request submitted for approval.";
     }
 
-    public List<Institute> getPendingInstitutes() {
-        return instituteRepository.findByApprovedByAdminIsNull(); //yet to create
-    }
 
-    public String approveInstitute(String instituteID, String adminID) {
-        Institute institute = instituteRepository.findById(instituteID)
-                .orElseThrow(() -> new RuntimeException("Institute not found"));
-
-        institute.setApprovedByAdmin(new Admin(adminID));
-        instituteRepository.save(institute);
-
-        return "Institute approved successfully.";
-    }
 }

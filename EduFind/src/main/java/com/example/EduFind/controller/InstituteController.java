@@ -24,15 +24,7 @@ public class InstituteController {
         return ResponseEntity.ok(instituteService.registerInstitute(request));
     }
 
-    @GetMapping("/admin/pending-institutes")
-    public ResponseEntity<List<?>> getPendingInstitutes() {
-        return ResponseEntity.ok(instituteService.getPendingInstitutes());
-    }
 
-    @PutMapping("/admin/approve/{instituteID}/{adminID}")
-    public ResponseEntity<String> approveInstitute(@PathVariable String instituteID, @PathVariable String adminID) {
-        return ResponseEntity.ok(instituteService.approveInstitute(instituteID, adminID));
-    }
 
 
 

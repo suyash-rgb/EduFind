@@ -46,4 +46,16 @@ public class CourseService {
             throw new RuntimeException("File upload failed");
         }
     }
+
+    public void updateSeatsFilled(Integer courseID, Integer filledSeats) {
+        Course course = courseRepository.findById(courseID)
+                .orElseThrow(()-> new RuntimeException("Course not found"));
+
+        try{
+            course.setFilledSeats(filledSeats);
+            courseRepository.save(course);
+        } catch(Exception e){
+            throw new RuntimeException("Error occured while updating filled seasts count: "+e.getMessage());
+        }
+    }
 }

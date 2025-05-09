@@ -36,6 +36,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/institute/public/**").permitAll()
                         .requestMatchers("/api/admin/**").permitAll()
                         .requestMatchers("/api/faculty/**").permitAll()
+                        .requestMatchers("/api/course/**").permitAll()
                         .requestMatchers("/api/institute/private/**").authenticated()
                         .anyRequest().denyAll())
                         .httpBasic(Customizer.withDefaults());

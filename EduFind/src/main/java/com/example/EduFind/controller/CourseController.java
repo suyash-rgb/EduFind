@@ -29,5 +29,13 @@ public class CourseController {
         return ResponseEntity.ok("Brochure uploaded successfully!");
     }
 
+    @PostMapping("/updateSeatsFilled")
+    public ResponseEntity<String> updateSeatsFilled(
+            @RequestParam("courseID") Integer courseID,
+            @RequestParam("filledSeats") Integer filledSeats){
+
+        courseService.updateSeatsFilled(courseID, filledSeats);
+        return ResponseEntity.ok("Filled Seats Count updated successfully!");
+    }
 
 }

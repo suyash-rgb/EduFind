@@ -24,7 +24,7 @@ public class Course {
     private Integer filledSeats;
 
     @Lob
-    @Column(name = "brochureData")
+    @Column(name = "brochureData", nullable = true)
     private byte[] brochureData;
 
     @ManyToOne

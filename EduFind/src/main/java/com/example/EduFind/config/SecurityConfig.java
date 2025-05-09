@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/institute/public/**").permitAll()
                         .requestMatchers("/api/admin/**").permitAll()
+                        .requestMatchers("/api/faculty/**").permitAll()
                         .requestMatchers("/api/institute/private/**").authenticated()
                         .anyRequest().denyAll())
                         .httpBasic(Customizer.withDefaults());

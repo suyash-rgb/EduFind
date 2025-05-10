@@ -9,10 +9,13 @@ import java.util.List;
 public class Admin {
 
     @Id
+    @Column(name = "adminID")
     private String adminID;
 
     @Column(unique = true, nullable = false)
     private String adminEmail;
+
+    @Column(name = "adminPassword", nullable = false)
     private String adminPassword;
 
     @Column(nullable = false)

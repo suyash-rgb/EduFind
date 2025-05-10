@@ -11,28 +11,25 @@ public class UserRoles {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "userID", referencedColumnName = "userID")
-    private Student student;
+    @Column(name = "userID") // ✅ Store only ID instead of full Student object
+    private String userID;
 
-    @ManyToOne
-    @JoinColumn(name = "instituteID", referencedColumnName = "instituteID")
-    private Institute institute;
+    @Column(name = "instituteID") // ✅ Store only ID instead of full Institute object
+    private String instituteID;
 
-    @ManyToOne
-    @JoinColumn(name = "adminID", referencedColumnName = "adminID")
-    private Admin admin;
+    @Column(name = "adminID") // ✅ Store only ID instead of full Admin object
+    private String adminID;
 
     @Column(name = "role", nullable = false)
     private String role;
 
     public UserRoles() {} // Default Constructor
 
-    public UserRoles(Integer id, Student student, Institute institute, Admin admin, String role) {
+    public UserRoles(Integer id, String userID, String instituteID, String adminID, String role) {
         this.id = id;
-        this.student = student;
-        this.institute = institute;
-        this.admin = admin;
+        this.userID = userID;
+        this.instituteID = instituteID;
+        this.adminID = adminID;
         this.role = role;
     }
 
@@ -44,28 +41,28 @@ public class UserRoles {
         this.id = id;
     }
 
-    public Student getStudent() {
-        return student;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
-    public Institute getInstitute() {
-        return institute;
+    public String getInstituteID() {
+        return instituteID;
     }
 
-    public void setInstitute(Institute institute) {
-        this.institute = institute;
+    public void setInstituteID(String instituteID) {
+        this.instituteID = instituteID;
     }
 
-    public Admin getAdmin() {
-        return admin;
+    public String getAdminID() {
+        return adminID;
     }
 
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
+    public void setAdminID(String adminID) {
+        this.adminID = adminID;
     }
 
     public String getRole() {

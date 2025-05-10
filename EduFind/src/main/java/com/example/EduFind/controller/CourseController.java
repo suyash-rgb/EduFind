@@ -38,4 +38,6 @@ public class CourseController {
         return ResponseEntity.ok("Filled Seats Count updated successfully!");
     }
 
+
+
 }

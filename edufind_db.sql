@@ -412,4 +412,10 @@ CREATE TABLE `institute` (
   CONSTRAINT `fk_admin` FOREIGN KEY (`approvedByAdminID`) REFERENCES `admin` (`adminID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+SELECT * FROM edufind.admin;
 SELECT * FROM edufind.institute;
+SELECT * FROM edufind.student;
+SELECT * FROM edufind.course;
+SELECT * FROM edufind.user_roles;
+
+SHOW CREATE TABLE edufind.user_roles;

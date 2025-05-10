@@ -13,10 +13,10 @@ public class Institute {
     @Column(name = "instituteID")
     private String instituteID;
 
-    @Column(name = "instituteName", unique = true, nullable = false)
+    @Column(name = "instituteEmail", unique = true, nullable = false)
     private String instituteEmail;
 
-    @Column(name = "instituteEmail")
+    @Column(name = "instituteName")
     private String instituteName;
 
     @Column(name = "institutePassword")

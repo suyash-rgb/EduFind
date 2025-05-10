@@ -28,6 +28,9 @@ public class Student {
     @Column(name = "number")
     private String number;
 
+    @Column(name = "role", nullable = false)
+    private String role = "STUDENT";
+
     @Column(name = "jwtRefreshToken")
     private String jwtRefreshToken;
 
